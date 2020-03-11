@@ -65,8 +65,40 @@ model.compile(optimizer='adam',
 model.fit(train_images, train_labels, epochs=10)
 
 predictions = model.predict(test_images)
-print(predictions[0])
-print("Нужна картинка")
+print(np.argmax(predictions[0]))
+print(test_labels[0])
+
+
+def plot_image(i, predictions_array, true_label, img):
+    predictions_array, true_label, img = predictions_array[i], true_label[i], img[i]
+    plt.grid(False)
+    plt.xticks([])
+    plt.yticks([])
+
+    plt.imshow(img, cmap=plt.cm.binary)
+
+    predicted_label = np.argmax(predictions_array)
+    if predicted_label == true_label:
+        color = 'blue'
+    else:
+        color = 'red'
+
+    plt.xlabel("{} {:2.0f}% ({})".format(class_names[predicted_label],
+                                100*np.max(predictions_array),
+                                class_names[true_label]),
+                                color=color)
+
+
+num_rows = 4
+num_cols = 2
+num_images = num_rows*num_cols
+plt.figure(figsize=(2*2*num_cols, 2*num_rows))
+for i in range(num_images):
+    plt.subplot(num_rows, 2*num_cols, 2*i+1)
+    plot_image(i, predictions, test_labels, test_images)
+plt.show()
+
+
 
 
 
