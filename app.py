@@ -66,6 +66,7 @@ model.fit(train_images, train_labels, epochs=10)
 
 predictions = model.predict(test_images)
 print(predictions[0])
+print("blalal")
 
 
 
